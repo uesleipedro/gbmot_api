@@ -2,7 +2,7 @@ import db from '../infra/database'
 
 export class AlunosData {
   async saveAluno(aluno: any) {
-    return await db.one('INSERT INTO gbmot.alunos (UPPER(nome), UPPER(nome_guerra), post_grad, whatsapp, matricula, lotacao, qbmg) VALUES ($1, $2, $3, $4, $5, $6, $7) returning *',
+    return await db.one('INSERT INTO gbmot.alunos UPPER(nome), UPPER(nome_guerra), post_grad, whatsapp, matricula, lotacao, qbmg) VALUES ($1, $2, $3, $4, $5, $6, $7) returning *',
       [aluno.nome, aluno.nome_guerra, Number(aluno.post_grad), aluno.whatsapp, Number(aluno.matricula), Number(aluno.lotacao), Number(aluno.qbmg)])
   }
 
