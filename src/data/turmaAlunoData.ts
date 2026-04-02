@@ -68,7 +68,7 @@ export class TurmaAlunoData {
 
   async concluirTurmaAluno(id_turma: number, dbOrTx: any) {
     const result = await dbOrTx.result(
-      `UPDATE gbmot.turma_aluno SET status = $2 WHERE id_turma = $1`,
+      `UPDATE gbmot.turma_aluno SET status = $2, dt_conclusao = NOW() WHERE id_turma = $1`,
       [id_turma, "Concluido"],
     );
     return {

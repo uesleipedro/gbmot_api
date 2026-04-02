@@ -33,22 +33,21 @@ export class UserController {
   }
 
   async getUserByEmail(email: string) {
-    const user = await userData.getUserByEmail(email);
-    if (!user) throw new Error("User not found");
-    return user;
+    return await userData.getUserByEmail(email);
   }
 
   async login(loginData: LoginData) {
-    const foundUser = await userData.getUserByEmail(loginData.email);
+    const foundUser = await this.getUserByEmail(loginData.email);
+
+    if (!foundUser) {
+      return { error: "Usuário ou senha incorretos!" };
+    }
+
     const isMatch = bcrypt.compareSync(loginData.senha, foundUser.senha);
 
-    const access_level = 0;
-    /*const access_level = await accessLevelScreenController.getAccessLevelScreen(
-      {
-        id_empresa: foundUser.id_empresa,
-        id_access_levels: foundUser.access_levels,
-      },
-    );*/
+    if (!isMatch || !foundUser.status) {
+      return { error: "Usuário ou senha incorretos!" };
+    }
 
     const token = jwt.sign(
       { id_user: foundUser.id_user, email: foundUser.email },
@@ -58,9 +57,11 @@ export class UserController {
       },
     );
 
-    return !foundUser || !isMatch || !foundUser?.status
-      ? { error: "Usuário ou senha incorretos!" }
-      : { user: { foundUser }, token: token, expiratedAt: "", access_level };
+    return {
+      foundUser,
+      token,
+      expiratedAt: "",
+    };
   }
 
   async auth(req: Request, res: Response, next: NextFunction) {

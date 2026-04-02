@@ -41,28 +41,9 @@ export class UserData {
 	      u.email,
 	      u.nome,
 	      u.senha,
-	      u.id_empresa,
         u.token_to_reset_password,
-        u.status,
-	      e.razao_social,
-	      e.nome_fantasia,
-	      e.cnpj_cpf,
-        e.cep,
-        e.logradouro,
-        e.bairro,
-        e.localidade,
-        e.uf,
-        e.numero,
-        e.celular,
-        e.email,
-        u.access_levels,
-        al.acessa_todas_agendas,
-        al.acessa_financeiro_paciente
-      FROM odonto.user u
-      INNER JOIN odonto.empresa e
-        ON u.id_empresa = e.id_empresa
-      INNER JOIN odonto.access_levels al 
-        ON al.access_level_id = u.access_levels
+        u.status
+      FROM gbmot.users u
       WHERE u.email= $1
       `, [email]
     )

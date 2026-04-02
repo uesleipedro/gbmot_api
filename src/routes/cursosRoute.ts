@@ -31,6 +31,15 @@ router.get('/', async function (req: Request, res: Response, next: NextFunction)
   }
 })
 
+router.get('/aluno', async function (req: Request, res: Response, next: NextFunction) {
+  try {
+    const response = await cursosController.getCursosByAluno(Number(req.query.id_aluno))
+    res.status(200).json(response)
+  } catch (e: any) {
+    next(e)
+  }
+})
+
 router.delete('/', async function (req: Request, res: Response, next: NextFunction) {
   try {
     const response = await cursosController.deleteCurso(req.query)

@@ -11,6 +11,10 @@ export class CursosController {
     return await cursosData.getCursos();
   }
 
+  async getCursosByAluno(id_aluno: number) {
+    return await cursosData.getCursosByAluno(id_aluno);
+  }
+
   async updateCursos(data: any) {
     return await cursosData.updateCursos(data);
   }
