@@ -2,8 +2,8 @@ import db from '../infra/database'
 
 export class AlunosData {
   async saveAluno(aluno: any) {
-    return await db.one('INSERT INTO gbmot.alunos UPPER(nome), UPPER(nome_guerra), post_grad, whatsapp, matricula, lotacao, qbmg) VALUES ($1, $2, $3, $4, $5, $6, $7) returning *',
-      [aluno.nome, aluno.nome_guerra, Number(aluno.post_grad), aluno.whatsapp, Number(aluno.matricula), Number(aluno.lotacao), Number(aluno.qbmg)])
+    return await db.one('INSERT INTO gbmot.alunos (nome, nome_guerra, post_grad, whatsapp, matricula, lotacao, qbmg) VALUES ($1, $2, $3, $4, $5, $6, $7) returning *',
+      [aluno.nome.toUpperCase(), aluno.nome_guerra.toUpperCase(), Number(aluno.post_grad), aluno.whatsapp, Number(aluno.matricula), Number(aluno.lotacao), Number(aluno.qbmg)])
   }
 
   async getAlunos() {
@@ -23,8 +23,8 @@ export class AlunosData {
   }
 
   async updateAluno(aluno: any) {
-    return await db.query('UPDATE gbmot.alunos SET nome = UPPER($1), nome_guerra = UPPER($2), post_grad = $3, whatsapp = $4, matricula = $5, lotacao = $6, qbmg = $7 WHERE matricula = $5 returning *',
-      [aluno.nome, aluno.nome_guerra, Number(aluno.post_grad), aluno.whatsapp, Number(aluno.matricula), aluno.lotacao, Number(aluno.qbmg)])
+    return await db.query('UPDATE gbmot.alunos SET nome = $1, nome_guerra = $2, post_grad = $3, whatsapp = $4, matricula = $5, lotacao = $6, qbmg = $7 WHERE matricula = $5 returning *',
+      [aluno.nome.toUpperCase(), aluno.nome_guerra.toUpperCase(), Number(aluno.post_grad), aluno.whatsapp, Number(aluno.matricula), aluno.lotacao, Number(aluno.qbmg)])
   }
 
   async incluirCadastroReserva(id_turma: number) {
