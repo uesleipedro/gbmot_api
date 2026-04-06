@@ -51,7 +51,7 @@ export class TurmasData {
       INNER JOIN gbmot.unidades u ON a.lotacao = u.id_unidade
       INNER JOIN gbmot.cursos c ON ta.id_curso = c.id_curso
       INNER JOIN gbmot.turmas t ON ta.id_turma = t.id_turma
-      WHERE ta.id_turma = $1`,
+      WHERE ta.id_turma = $1 ORDER BY a.post_grad DESC`,
       [id_turma],
     );
   }
